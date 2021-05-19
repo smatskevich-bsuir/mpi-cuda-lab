@@ -1,4 +1,10 @@
+#include <filesystem>
+#include <cuda.h>
+#include <cuda_runtime.h>
+#include <device_launch_parameters.h>
+
 #include "../include/image_processing.cuh"
+#include "../include/helper_image.h"
 
 const size_t BLOCK_SIZE = 16;
 
@@ -80,7 +86,10 @@ void prewittGPU(const std::string& file)
 	cudaFree(device_data);
 	cudaFree(device_res);
 
-	size_t dot = file.rfind(".");
-	std::string output_file = file.substr(0, dot + 1) + "prewitt" + file.substr(dot);
-	__savePPM(output_file.c_str(), output, width, height, channels);
+	std::filesystem::path input_path(file);
+	std::filesystem::path ouput_path(input_path.parent_path());
+	ouput_path /= "result";
+	ouput_path /= input_path.stem().string() + ".prewitt" + input_path.extension().string();
+
+	__savePPM(ouput_path.c_str(), output, width, height, channels);
 }
