@@ -86,10 +86,13 @@ void prewittGPU(const std::string& file)
 	cudaFree(device_data);
 	cudaFree(device_res);
 
+	cudaFreeHost(input);
+
 	std::filesystem::path input_path(file);
 	std::filesystem::path ouput_path(input_path.parent_path());
 	ouput_path /= "result";
 	ouput_path /= input_path.stem().string() + ".prewitt" + input_path.extension().string();
 
 	__savePPM(ouput_path.c_str(), output, width, height, channels);
+	free(output);
 }
