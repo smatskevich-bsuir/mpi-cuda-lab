@@ -1,0 +1,29 @@
+#install cuda
+https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&target_distro=Ubuntu&target_version=2004&target_type=runfilelocal
+
+#setup docker
+#setup nvidia-container
+https://github.com/NVIDIA/nvidia-docker
+
+#install mpi
+apt install mpich
+
+#setup directory for cluster
+mkdir -p /cluster
+chown -R owner /cluster
+chmod -R 755 /cluster
+
+#generate ssh key
+ssh-keygen -t rsa -b 4096 -f ssh/mpi_rsa
+cp ssh/mpi_rsa ~/.ssh/id_rsa
+cp ssh/mpi_rsa.pub ~/.ssh/id_rsa.pub
+
+#build with
+make
+#run with
+mpirun --hostfile hosts /cluster/computer
+
+#docker build 
+make image
+#docker start
+docker run --add-host=hostname:172.17.0.1 -v /cluster:/cluster --rm -d --gpus all mpi-cuda
