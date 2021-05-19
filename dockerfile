@@ -25,7 +25,7 @@ RUN apt-get -qy autoremove
 RUN useradd -m ${USER}
 #RUN usermod -aG sudo ${USER}
 
-ADD ssh/mpi_rsa.pub ${HOME}/.ssh/authorized_keys
+ADD ssh/id_rsa.pub ${HOME}/.ssh/authorized_keys
 
 RUN chmod -R 600 ${HOME}/.ssh/*
 RUN chown -R ${USER}:${USER} ${HOME}/.ssh

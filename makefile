@@ -42,6 +42,7 @@ INC_DIR = include
 # Target executable name:
 EXE = /cluster/computer
 
+# Image name:
 IMAGE = mpi-cuda
 
 # Object files:

@@ -23,6 +23,7 @@ chmod -R 755 /cluster
 mkdir ssh
 ssh-keygen -t rsa -b 4096 -f ssh/id_rsa
 cp -R ssh/. ~/.ssh/
+#use ssh-add if key not added automatically
 
 #build with
 make
