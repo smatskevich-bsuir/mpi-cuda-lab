@@ -1,6 +1,10 @@
 #install cuda
 https://developer.nvidia.com/cuda-downloads
 
+#install variables for cuda
+echo 'export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}' >> ~/.profile
+source ~./profile
+
 #setup docker
 https://docs.docker.com/engine/install/ubuntu/
 
@@ -30,5 +34,6 @@ mpirun --hostfile hosts /cluster/computer
 
 #docker build 
 make image
+
 #docker start
 docker run --add-host=hostname:172.17.0.1 -v /cluster:/cluster --rm -d --gpus all mpi-cuda
